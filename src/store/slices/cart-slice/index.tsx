@@ -1,6 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { CartItem } from "../../../interfaces/cart-items";
-import { openModal } from "../cart-modal-slice";
 
 const initialState: {
   cartItems: CartItem[];
@@ -21,11 +20,6 @@ export const cartSlice = createSlice({
         existingItem.quantity++;
       } else {
         state.cartItems.push({ ...newItem, quantity: 1 });
-      }
-      if (
-        !state.cartItems.find((item) => item.cart_id === action.payload.cart_id)
-      ) {
-        openModal();
       }
     },
     removeItem(state, action) {
