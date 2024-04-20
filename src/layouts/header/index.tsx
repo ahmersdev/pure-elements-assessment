@@ -4,17 +4,11 @@ import LocalMallIcon from "@mui/icons-material/LocalMall";
 import { Link } from "react-router-dom";
 import { Fragment } from "react";
 import Checkout from "./checkout";
-import { RootState, useAppDispatch, useAppSelector } from "../../store";
 import { openModal } from "../../store/slices/cart-modal-slice";
+import useHeader from "./use-header";
 
 export default function Header() {
-  const cartModal = useAppSelector(
-    (state: RootState) => state.cartModal.isOpen
-  );
-
-  const dispatch = useAppDispatch();
-
-  const cartItems = useAppSelector((state: RootState) => state.cart.cartItems);
+  const { cartItems, dispatch, cartModal } = useHeader();
 
   return (
     <Fragment>

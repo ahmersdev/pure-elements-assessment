@@ -1,42 +1,19 @@
 import { Box, Drawer, Grid, Typography } from "@mui/material";
-import { RootState, useAppDispatch, useAppSelector } from "../../../store";
-import {
-  decrementQuantity,
-  incrementQuantity,
-  removeItem,
-} from "../../../store/slices/cart-slice";
 import AddIcon from "@mui/icons-material/Add";
 import RemoveIcon from "@mui/icons-material/Remove";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
-import { closeModal } from "../../../store/slices/cart-modal-slice";
+import useCheckout from "./use-checkout";
 
 export default function Checkout() {
-  const dispatch = useAppDispatch();
-  const cartItems = useAppSelector((state: RootState) => state.cart.cartItems);
-
-  const cartModal = useAppSelector(
-    (state: RootState) => state.cartModal.isOpen
-  );
-
-  const onClose = () => {
-    dispatch(closeModal());
-  };
-
-  const handleRemoveItem = (cart_id: string) => {
-    dispatch(removeItem(cart_id));
-  };
-
-  const handleIncrementQuantity = (cart_id: string) => {
-    dispatch(incrementQuantity(cart_id));
-  };
-
-  const handleDecrementQuantity = (cart_id: string) => {
-    dispatch(decrementQuantity(cart_id));
-  };
-
-  const subtotal = cartItems.reduce((total: any, item: any) => {
-    return total + item.price * item.quantity;
-  }, 0);
+  const {
+    cartModal,
+    onClose,
+    cartItems,
+    handleIncrementQuantity,
+    handleDecrementQuantity,
+    handleRemoveItem,
+    subtotal,
+  } = useCheckout();
 
   return (
     <Drawer
@@ -84,15 +61,15 @@ export default function Checkout() {
                   <Typography variant={"h5"}>{item?.size}</Typography>
 
                   <Box display={"flex"} alignItems={"center"} gap={2} mt={2}>
-                    <AddIcon
-                      onClick={() => handleIncrementQuantity(item.cart_id)}
+                    <RemoveIcon
+                      onClick={() => handleDecrementQuantity(item.cart_id)}
                       sx={{ cursor: "pointer" }}
                     />
 
                     <Typography>{item.quantity}</Typography>
 
-                    <RemoveIcon
-                      onClick={() => handleDecrementQuantity(item.cart_id)}
+                    <AddIcon
+                      onClick={() => handleIncrementQuantity(item.cart_id)}
                       sx={{ cursor: "pointer" }}
                     />
 

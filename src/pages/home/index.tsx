@@ -1,6 +1,5 @@
 import { Box, Grid, Skeleton, Typography } from "@mui/material";
-
-import useHome from "./useHome";
+import useHome from "./use-home";
 import { QUANTITY } from "../../constants";
 
 export default function Home() {
